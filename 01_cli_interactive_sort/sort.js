@@ -10,7 +10,7 @@ export async function sortAlph(arr) {
 // Show numbers from lesser to greater
 export async function sortNumToGreater(arr) {
   const numericValues = arr.filter((value) => !isNaN(value));
-  const sorted = numericValues.sort((a, b) => a.localeCompare(b));
+  const sorted = numericValues.sort((a, b) => parseFloat(a) - parseFloat(b));
 
   console.log(sorted);
 }
@@ -18,7 +18,7 @@ export async function sortNumToGreater(arr) {
 // Show numbers from bigger to smaller
 export async function sortNumToSmaller(arr) {
   const numericValues = arr.filter((value) => !isNaN(value));
-  const sorted = numericValues.sort((a, b) => b.localeCompare(a));
+  const sorted = numericValues.sort((a, b) => parseFloat(b) - parseFloat(a));
 
   console.log(sorted);
 }
