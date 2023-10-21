@@ -5,6 +5,7 @@ dist/
 build/
 out/
 .eslintcache
+.DS_Store
 .pnp/
 .pnp.js
 npm-debug.log
