@@ -91,8 +91,4 @@ async function sortMenu() {
   }
 }
 
-async function main() {
-  sortMenu();
-}
-
-main();
+sortMenu();
