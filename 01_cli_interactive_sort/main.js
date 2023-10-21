@@ -50,34 +50,35 @@ async function userInput() {
   return answer;
 }
 
-async function sortMenu(arr) {
+async function sortMenu() {
   while (true) {
+    const userAnswer = await userInput();
     displayMenu(menuOptions);
     const userChoice = await rl.question("Enter your choice: ");
     switch (userChoice) {
       case "1":
         console.log("Sorted: alphabetically");
-        sortAlph(arr);
+        sortAlph(userAnswer);
         break;
       case "2":
         console.log("Sorted: lesser to greater");
-        sortNumToGreater(arr);
+        sortNumToGreater(userAnswer);
         break;
       case "3":
         console.log("Sorted: bigger to smaller");
-        sortNumToSmaller(arr);
+        sortNumToSmaller(userAnswer);
         break;
       case "4":
         console.log("Sorted: by the number of letters in the word");
-        sortAscLetters(arr);
+        sortAscLetters(userAnswer);
         break;
       case "5":
         console.log("Sorted: only unique words");
-        sortUniqWords(arr);
+        sortUniqWords(userAnswer);
         break;
       case "6":
         console.log("Sorted: unique values");
-        sortUniqVal(arr);
+        sortUniqVal(userAnswer);
         break;
       case "exit":
         console.log("Goodbye!");
@@ -90,8 +91,7 @@ async function sortMenu(arr) {
 }
 
 async function main() {
-  const userAnswer = await userInput();
-  sortMenu(userAnswer);
+  sortMenu();
 }
 
 main();
