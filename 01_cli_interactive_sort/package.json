@@ -1,5 +1,6 @@
 {
   "name": "01_cli_interactive_sort",
+  "type": "module",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,5 +8,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "doma2k",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@typescript-eslint/parser": "^5.0.1",
+    "eslint": "^8.7.0",
+    "prettier": "^2.5.1",
+    "typescript": "^4.4.4"
+  }
 }
