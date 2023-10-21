@@ -20,7 +20,7 @@ const menuOptions = [
   { id: 3, text: "Show numbers from bigger to smaller" },
   {
     id: 4,
-    text: "Display words in ascending order by number of letters in the word",
+    text: "Display words in ascending order by the number of letters in the word",
   },
   { id: 5, text: "Show only unique words" },
   {
@@ -51,11 +51,12 @@ async function userInput() {
 }
 
 async function sortMenu(arr) {
-  displayMenu(menuOptions);
-  rl.on("line", (xyz) => {
-    switch (xyz) {
+  while (true) {
+    displayMenu(menuOptions);
+    const userChoice = await rl.question("Enter your choice: ");
+    switch (userChoice) {
       case "1":
-        console.log("Sorted: alphabetically: ");
+        console.log("Sorted: alphabetically");
         sortAlph(arr);
         break;
       case "2":
@@ -67,7 +68,7 @@ async function sortMenu(arr) {
         sortNumToSmaller(arr);
         break;
       case "4":
-        console.log("Sorted: by letters in the word");
+        console.log("Sorted: by the number of letters in the word");
         sortAscLetters(arr);
         break;
       case "5":
@@ -75,20 +76,17 @@ async function sortMenu(arr) {
         sortUniqWords(arr);
         break;
       case "6":
-        console.log("Sorted: unique values ");
+        console.log("Sorted: unique values");
         sortUniqVal(arr);
         break;
       case "exit":
-        console.log("Good buy!");
+        console.log("Goodbye!");
         process.exit();
         break;
       default:
-        console.log(
-          'Please select a valid option or type "exit" and go relax...'
-        );
-        break;
+        console.log('Please select a valid option or type "exit" to exit.');
     }
-  });
+  }
 }
 
 async function main() {
