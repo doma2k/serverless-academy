@@ -11,4 +11,5 @@ out/
 npm-debug.log
 yarn-error.log
 !.gitignore
+.vscode
 
