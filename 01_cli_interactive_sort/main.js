@@ -54,6 +54,7 @@ async function sortMenu() {
   while (true) {
     const userAnswer = await userInput();
     displayMenu(menuOptions);
+
     const userChoice = await rl.question("Enter your choice: ");
     switch (userChoice) {
       case "1":
