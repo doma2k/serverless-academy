@@ -33,6 +33,18 @@ async function appendUserToFile(user) {
     }
 }
 
+async function userSearch(jsonData) {
+    const nameToSearch = await input({ message: 'Enter user name you want to find in DB: ' });
+    for (const name in jsonData) {
+        if (jsonData[name].name === nameToSearch) {
+            console.log(`User ${nameToSearch} found in the database.`);
+            return jsonData[name];
+        }
+    }
+    console.log(`${nameToSearch} not found in the database.`);
+}
+
+
 async function main() {
     try {
         while (true) {
@@ -44,6 +56,8 @@ async function main() {
                         const fileR = await fs.readFile(usersFile, 'utf8');
                         const jsonData = JSON.parse(fileR);
                         console.log(jsonData);
+                        const found = await userSearch(jsonData)
+                        console.log(found);
                     } catch (err) {
                         console.error('Error reading or parsing the file:', err);
                     }
