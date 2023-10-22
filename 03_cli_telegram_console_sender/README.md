@@ -1,0 +1,1 @@
+BOT-ID and CHAT-ID need to be hard coded please.
