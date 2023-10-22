@@ -1,10 +1,10 @@
 import { Command } from 'commander';
 import TelegramBot from 'node-telegram-bot-api';
 
-const token = 'YOUR_TELEGRAM_BOT_TOKEN';
-
+const token = '6286796097:AAGxpV-uS_ly30_I3Q_8m8bRHGkcCcNP1AQ';
+const chatId = 1933874030
 const program = new Command();
-// const bot = new TelegramBot(token, {polling: true});
+const bot = new TelegramBot(token, {polling: true});
 
 program
   .name('app.js')
@@ -12,10 +12,17 @@ program
   .version('0.0.1');
 
 program.command('send-message')
-  .description('Send message in to your Telegram bot from terminal.')
-  .argument('<string>', 'Type your mesage here.')
+       .description('Send message in to your Telegram bot from terminal.')
+   .argument('<string>', 'Type your mesage here.')
   .action((str) => {
-    console.log(str.split());
+    try{
+      bot.sendMessage(chatId, str);
+    }catch(err){
+      console.log("some error", err)
+    } 
+         console.log(str.split());
+         
+              process.exit(0)
   });
 
 program.command('send-photo')
@@ -27,3 +34,6 @@ program.command('send-photo')
   });
 
 program.parse();
+
+
+
