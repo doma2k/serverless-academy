@@ -1,46 +1,81 @@
-/* 
-The Algorithm
-After launching the program, a message is displayed asking for a name, meaning we enter the user creation mode:
-
-Then you are prompted to choose a gender from the list;
-Then specify age;
-then the cycle with adding a user repeats. In this way you can add another user.
-To stop adding users, just press ENTER instead of entering the name.
-
-After refusing to add another user, the application prompts you to find the user by name in the database. You can choose between two answers: Y/N. If you choose N, exit, and if you choose Y, perform the search and inform you about the results: if the user is found in the database, display all the information about him/her, if not - indicate that such a user does not exist.
-
-Important notes
-You should use a regular text file (.txt) as your database. Add new users without overwriting previously added ones.
-Organize data storage in your database so that each user can be easily turned into an object (JSON.parse and JSON.stringifyshould work just fine).
-Pay attention to the search algorithm and take the variant that a user can write a request in caps lock, but still have to get a valid result
-*/
 import { input, confirm } from '@inquirer/prompts';
 import select from '@inquirer/select';
-import fs from 'node:fs/promises'
+import fs from 'node:fs/promises';
 
-const users = {}
+const usersFile = './src/data/users.txt';
 
-while (true) {
-    const name = await input({ message: 'Enter your name' });
-    const gender = await select({
-        message: 'Select your gender',
-        choices: [
-            {
-                name: 'male',
-                value: 'male',
-            },
-            {
-                name: 'female',
-                value: 'female',
-            },
-            {
-                name: 'shemale',
-                value: 'shemale',
-            }
-        ]
-    });
-    const age = await input({ message: 'Enter your age' });
-    const contenue = await confirm({ message: 'Continue?' });
+async function isName() {
+    const name = await input({ message: 'Enter your name (or press Enter to stop adding users):' });
+    return name.trim();
 }
 
+async function isAge() {
+    let age;
+    while (true) {
+        age = await input({ message: 'Enter your age: ' });
+        if (age === '' || !isNaN(age)) {
+            break;
+        }
+        console.log('Enter valid age, or leave empty!')
+    }
+    return age.trim();
+}
 
+async function appendUserToFile(user) {
+    try {
+        const existingData = await fs.readFile(usersFile, 'utf8');
+        const users = JSON.parse(existingData);
+        users.push(user);
+        const updatedData = JSON.stringify(users);
+        await fs.writeFile(usersFile, updatedData, 'utf8');
+    } catch (err) {
+        console.error('Error appending user to file:', err);
+    }
+}
+
+async function main() {
+    try {
+        while (true) {
+            const name = await isName();
+            if (name === '') {
+                const contenue = await confirm({ message: 'Would you like to search users in the database?' });
+                if (contenue) {
+                    try {
+                        const fileR = await fs.readFile(usersFile, 'utf8');
+                        const jsonData = JSON.parse(fileR);
+                        console.log(jsonData);
+                    } catch (err) {
+                        console.error('Error reading or parsing the file:', err);
+                    }
+                    break;
+                }
+                console.log('Goodbye! See you later!');
+                break;
+            }
+
+            const age = await isAge();
+
+            const gender = await select({
+                message: 'Select your gender',
+                choices: [
+                    {
+                        name: 'male',
+                        value: 'male',
+                    },
+                    {
+                        name: 'female',
+                        value: 'female',
+                    },
+                ],
+            });
+
+            const user = { name, gender, age };
+            await appendUserToFile(user);
+        }
+        process.exit(0);
+    } catch(err) {
+        console.log('Programm terminated...')
+    }
+}
+
+main();
