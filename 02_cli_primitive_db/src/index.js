@@ -35,13 +35,15 @@ async function appendUserToFile(user) {
 
 async function userSearch(jsonData) {
     const nameToSearch = await input({ message: 'Enter user name you want to find in DB: ' });
+    const lowerCaseName = nameToSearch.toLowerCase()
     for (const name in jsonData) {
-        if (jsonData[name].name === nameToSearch) {
+        if (jsonData[name].name.toLowerCase() === lowerCaseName) {
             console.log(`User ${nameToSearch} found in the database.`);
             return jsonData[name];
         }
     }
-    console.log(`${nameToSearch} not found in the database.`);
+    console.log(`User ${nameToSearch} not found in the database.`);
+    process.exit(0);
 }
 
 
