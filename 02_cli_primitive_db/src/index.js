@@ -26,12 +26,16 @@ while (true) {
         message: 'Select your gender',
         choices: [
             {
+                name: 'male',
+                value: 'male',
+            },
+            {
                 name: 'female',
                 value: 'female',
             },
             {
-                name: 'male',
-                value: 'male',
+                name: 'shemale',
+                value: 'shemale',
             }
         ]
     });
