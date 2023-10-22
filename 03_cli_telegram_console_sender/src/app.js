@@ -1,6 +1,6 @@
 import { Command } from "commander";
 import TelegramBot from "node-telegram-bot-api";
-import fs from "node:fs/promises"
+import fs from "node:fs/promises";
 
 process.noDeprecation = true;
 
@@ -39,4 +39,4 @@ program
     }
   });
 
-program.parseAsync()
+program.parseAsync();

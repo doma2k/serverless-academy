@@ -1,0 +1,15 @@
+{
+  "name": "04_telegram_bot_weather_forecast",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "exports": "./src/app.js",
+  "engines": {
+    "node": ">=16"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
