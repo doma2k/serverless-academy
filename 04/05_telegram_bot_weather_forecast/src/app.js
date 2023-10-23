@@ -1,15 +1,70 @@
 import TelegramBot from "node-telegram-bot-api";
 import axios from "axios";
+import NodeCache from "node-cache";
 
 const BOT_ID = "";
-const WEATHER_ID = "";
+const WEATHER_ID = ""
+
 const bot = new TelegramBot(BOT_ID, { polling: true });
+const myCache = new NodeCache({ stdTTL: 303, checkperiod: 333 });
+
+const PRIVAT =
+  "https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=11";
+const MONO = "https://api.monobank.ua/bank/currency";
 const intervalRefs = {};
-let city = "Cascais";
+let city = "Kiev";
 
 async function sendMessage(chatId, text, keyboard) {
   await bot.sendMessage(chatId, text, keyboard);
 }
+
+async function getExchangeEUR() {
+  try {
+    const data = await axios(PRIVAT);
+    const filtered = data.data[0];
+    const sell = parseFloat(filtered.buy).toFixed(1);
+    const buy = parseFloat(filtered.sale).toFixed(1);
+    const exchangeRate = {
+      fiat: filtered.ccy,
+      buy: buy,
+      sale: sell,
+    };
+    return exchangeRate;
+  } catch (err) {
+    console.log("Ooooops PrivateBank midule failure\n");
+  }
+}
+
+async function getExchangeUSD() {
+  try {
+    const data = await axios(MONO);
+    const filtered = data.data[0];
+    const sell = parseFloat(filtered.rateBuy).toFixed(1);
+    const buy = parseFloat(filtered.rateSell).toFixed(1);
+    const exchangeRate = {
+      fiat: "USD",
+      buy: buy,
+      sale: sell,
+    };
+    return exchangeRate;
+  } catch (err) {
+    console.log("Oooops seems Mono have some issues\n");
+  }
+}
+
+async function cashCash() {
+  if (!myCache.has("USD") && !myCache.has("EUR")) {
+    const cashMono = await getExchangeUSD();
+    const cashPrivat = await getExchangeEUR();
+    myCache.mset([
+      { key: "USD", val: cashMono },
+      { key: "EUR", val: cashPrivat },
+    ]);
+  }
+  return myCache.mget(["USD", "EUR"]);
+}
+const respOnzzz = await cashCash();
+console.log(respOnzzz)
 
 async function getWeatherData() {
   const geoResponse = await axios.get(
@@ -35,7 +90,7 @@ function startHandler(msg) {
   const message = "Welcome to the Weather Forecast bot:";
   const keyboard = {
     reply_markup: {
-      keyboard: [["Forecast in Cascais"]],
+      keyboard: [[`Forecast in ${city}`]],
       one_time_keyboard: true,
     },
   };
@@ -50,7 +105,7 @@ async function forecastHandler(msg) {
   const keyboard = {
     reply_markup: {
       keyboard: [["at intervals of 3 hours", "at intervals of 6 hours"]],
-      one_time_keyboard: true,
+      one_time_keyboard: false,
     },
   };
   await sendMessage(chatId, "This is the current forecast:");
@@ -67,9 +122,9 @@ function intervalHandler(msg) {
 
   let interval;
   if (msg.text === "at intervals of 3 hours") {
-    interval = 3 * 60 * 60 * 1000;
+    interval = 2 * 1000;
   } else if (msg.text === "at intervals of 6 hours") {
-    interval = 6 * 60 * 60 * 1000;
+    interval = 5 * 1000;
   }
 
   intervalRefs[chatId] = setInterval(async () => {
@@ -80,7 +135,7 @@ function intervalHandler(msg) {
 
 function weatherBot() {
   bot.onText(/\/start/, startHandler);
-  bot.onText(/Forecast in Cascais/, forecastHandler);
+  bot.onText(/Forecast in Kiev/, forecastHandler);
   bot.onText(/at intervals of 3 hours|at intervals of 6 hours/, intervalHandler);
 }
 
