@@ -3,13 +3,12 @@ import axios from "axios";
 
 // const bot = new TelegramBot(token, { polling: true });
 
-const BOT_ID = "5869901140:AAEqaOSk5ggcpNdCYHz9AmIKQIgOyXlD-r8";
-const WEATHER_ID = "9f8556da2451252d5484540ffd465ef1";
+const BOT_ID = "";
+const WEATHER_ID = "";
 const token = BOT_ID;
-const chatId = CHAT_ID;
 
 async function getData() {
-  let city = "Lisbon";
+  let city = "Cascais";
   const geoGet = await axios({
     method: "get",
     url: `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${WEATHER_ID}`,
@@ -24,7 +23,7 @@ async function getData() {
 
   const wetherGet = await axios({
     method: "get",
-    url: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${WEATHER_ID}`,
+    url: `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${WEATHER_ID}`,
     responseType: "json",
   });
 
