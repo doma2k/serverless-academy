@@ -3,7 +3,7 @@ import axios from "axios";
 import NodeCache from "node-cache";
 
 const BOT_ID = "";
-const WEATHER_ID = ""
+const WEATHER_ID = "";
 
 const bot = new TelegramBot(BOT_ID, { polling: true });
 const myCache = new NodeCache({ stdTTL: 303, checkperiod: 333 });
@@ -63,8 +63,6 @@ async function cashCash() {
   }
   return myCache.mget(["USD", "EUR"]);
 }
-const respOnzzz = await cashCash();
-console.log(respOnzzz)
 
 async function getWeatherData() {
   const geoResponse = await axios.get(
@@ -90,7 +88,7 @@ function startHandler(msg) {
   const message = "Welcome to the Weather Forecast bot:";
   const keyboard = {
     reply_markup: {
-      keyboard: [[`Forecast in ${city}`]],
+      keyboard: [[`Forecast in ${city}`], [`Exchange Rates`]],
       one_time_keyboard: true,
     },
   };
@@ -104,7 +102,10 @@ async function forecastHandler(msg) {
   const chatId = msg.chat.id;
   const keyboard = {
     reply_markup: {
-      keyboard: [["at intervals of 3 hours", "at intervals of 6 hours"]],
+      keyboard: [
+        ["at intervals of 3 hours", "at intervals of 6 hours"],
+        ["Return"],
+      ],
       one_time_keyboard: false,
     },
   };
@@ -124,7 +125,7 @@ function intervalHandler(msg) {
   if (msg.text === "at intervals of 3 hours") {
     interval = 2 * 1000;
   } else if (msg.text === "at intervals of 6 hours") {
-    interval = 5 * 1000;
+    interval = 6 * 60 * 60 * 1000;
   }
 
   intervalRefs[chatId] = setInterval(async () => {
@@ -133,10 +134,39 @@ function intervalHandler(msg) {
   }, interval);
 }
 
+async function exchangeHandler(msg) {
+  const chatId = msg.chat.id;
+  const message = "Exchange Rates:";
+  const keyboard = {
+    reply_markup: {
+      keyboard: [["USD Price in MONO", "EUR Price in PRIVATE"], ["Return"]],
+      one_time_keyboard: false,
+    },
+  };
+  await sendMessage(chatId, message, keyboard);
+}
+
 function weatherBot() {
   bot.onText(/\/start/, startHandler);
   bot.onText(/Forecast in Kiev/, forecastHandler);
-  bot.onText(/at intervals of 3 hours|at intervals of 6 hours/, intervalHandler);
+  bot.onText(/Exchange Rates/, exchangeHandler);
+  bot.onText(
+    /at intervals of 3 hours|at intervals of 6 hours/,
+    intervalHandler
+  );
+  bot.onText(/Return/, startHandler);
+  bot.onText(/USD Price in MONO/, async (msg) => {
+    const chatId = msg.chat.id;
+    const response = await cashCash();
+    const responseX = response.USD
+    sendMessage(chatId, `${responseX.fiat}\nbuy: ${responseX.buy} UAH\nsale: ${responseX.sale} UAH`);
+  });
+  bot.onText(/EUR Price in PRIVATE/, async (msg) => {
+    const chatId = msg.chat.id;
+    const response = await cashCash();
+    const responseX = response.EUR
+    sendMessage(chatId, `${responseX.fiat}\nbuy: ${responseX.buy} UAH\nsale: ${responseX.sale} UAH`);
+  });
 }
 
 weatherBot();
