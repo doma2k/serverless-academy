@@ -1,0 +1,15 @@
+{
+  "name": "06_instagram_giveaway",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": "./app.js",
+  "engines": {
+    "node": ">=16"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
