@@ -1,8 +1,13 @@
 import { input, confirm } from '@inquirer/prompts';
 import select from '@inquirer/select';
 import fs from 'node:fs/promises';
+import path from "node:path";
 
-const usersFile = './src/data/users.txt';
+const relativePath = 'data/users.txt';
+const usersFile = path.resolve(relativePath);
+console.log(usersFile)
+
+
 
 async function isName() {
     const name = await input({ message: 'Enter your name (or press Enter to stop adding users):' });
