@@ -95,10 +95,10 @@ async function main() {
   console.log("Total values: " + allFileContents.length);
   
   const uniqueValues = getUniqueValues(allFileContents);
-  console.log("Number of unique values: " + uniqueValues.length);
+  console.log("Number of unique values in all files: " + uniqueValues.length);
 
   const usernamesInAllFiles = await findUsernamesInAllFiles(folderPath, files);
-  console.log("Number of usernames occurring in all files:", usernamesInAllFiles.size);
+  console.log("Number of usernames occurring in 20 files:", usernamesInAllFiles.size);
 
   const usernamesInAtLeastTen = await findUsernamesInAtLeastTen(folderPath, files);
   console.log("Number of usernames occurring in at least 10 files:", usernamesInAtLeastTen.length);
