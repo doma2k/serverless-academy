@@ -2,7 +2,7 @@
   "name": "06_instagram_giveaway",
   "version": "1.0.0",
   "type": "module",
-  "exports": "./app.js",
+  "exports": "./src/app.js",
   "engines": {
     "node": ">=16"
   },
