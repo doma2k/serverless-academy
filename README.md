@@ -4,7 +4,7 @@ This task has been completed for the Serverless Academy, encompassing both basic
 
 ## Notes
 
-- scripts shold be lunched from ''src'' folder
+- scripts shold be lunched from 'src' folder
 - env.example need to be renamed to .env and set to own keys without ""
 - utils.js are handling .env
 - For 03 task chat-id token need to be added to .env 
