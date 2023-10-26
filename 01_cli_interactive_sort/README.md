@@ -2,4 +2,4 @@
 
 Simple sorting cli
 use:
-`node index.js`
+`node app.js`
