@@ -2,6 +2,7 @@ import TelegramBot from "node-telegram-bot-api";
 import axios from "axios";
 import NodeCache from "node-cache";
 import { loadCustomEnvFile } from "../../../utils/env.js";
+
 const envPATH = "../../../.env"
 const env = await loadCustomEnvFile(envPATH);
 const BOT_ID = env.BOT_ID;

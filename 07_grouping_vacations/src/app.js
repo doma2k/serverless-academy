@@ -1,5 +1,4 @@
 import fs from 'fs/promises';
-
 const filePath = './data.json';
 
 async function main() {
@@ -26,7 +25,6 @@ async function main() {
         status: item.status,
       };
 
-      // Check for vacation duplicates
       const existingUser = userMap.get(userName);
       const isDuplicate = existingUser.vacations.some((vacation) =>
         areVacationsEqual(vacation, modifiedVacation)
@@ -46,7 +44,6 @@ async function main() {
 }
 
 function areVacationsEqual(vacation1, vacation2) {
-  // Define your criteria for comparing vacations here
   return (
     vacation1.usedDays === vacation2.usedDays &&
     vacation1.endDate === vacation2.endDate &&
