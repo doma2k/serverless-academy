@@ -1,9 +1,12 @@
 import TelegramBot from "node-telegram-bot-api";
 import axios from "axios";
 import NodeCache from "node-cache";
+import { loadCustomEnvFile } from "../../../utils/env.js";
+const envPATH = "../../../.env"
+const env = await loadCustomEnvFile(envPATH);
+const BOT_ID = env.BOT_ID;
+const WEATHER_ID = env.WEATHER_ID;
 
-const BOT_ID = "";
-const WEATHER_ID = "";
 
 const bot = new TelegramBot(BOT_ID, { polling: true });
 const myCache = new NodeCache({ stdTTL: 303, checkperiod: 333 });
@@ -158,14 +161,20 @@ function weatherBot() {
   bot.onText(/USD Price in MONO/, async (msg) => {
     const chatId = msg.chat.id;
     const response = await cashCash();
-    const responseX = response.USD
-    sendMessage(chatId, `${responseX.fiat}\nbuy: ${responseX.buy} UAH\nsale: ${responseX.sale} UAH`);
+    const responseX = response.USD;
+    sendMessage(
+      chatId,
+      `${responseX.fiat}\nbuy: ${responseX.buy} UAH\nsale: ${responseX.sale} UAH`
+    );
   });
   bot.onText(/EUR Price in PRIVATE/, async (msg) => {
     const chatId = msg.chat.id;
     const response = await cashCash();
-    const responseX = response.EUR
-    sendMessage(chatId, `${responseX.fiat}\nbuy: ${responseX.buy} UAH\nsale: ${responseX.sale} UAH`);
+    const responseX = response.EUR;
+    sendMessage(
+      chatId,
+      `${responseX.fiat}\nbuy: ${responseX.buy} UAH\nsale: ${responseX.sale} UAH`
+    );
   });
 }
 

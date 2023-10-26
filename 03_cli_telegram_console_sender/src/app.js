@@ -1,12 +1,14 @@
 import { Command } from "commander";
 import TelegramBot from "node-telegram-bot-api";
 import fs from "node:fs/promises";
+import { loadCustomEnvFile } from "../../utils/env.js";
 
+const envPATH = "../../.env"
+const env = await loadCustomEnvFile(envPATH);
 process.noDeprecation = true;
 
-// Use your credentials
-const token = BOT_ID;
-const chatId = CHAT_ID;
+const token = env.BOT_ID;
+const chatId = env.CHAT_ID;
 
 const program = new Command();
 const bot = new TelegramBot(token);

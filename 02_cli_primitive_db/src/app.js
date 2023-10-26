@@ -7,8 +7,6 @@ const relativePath = 'data/users.txt';
 const usersFile = path.resolve(relativePath);
 console.log(usersFile)
 
-
-
 async function isName() {
     const name = await input({ message: 'Enter your name (or press Enter to stop adding users):' });
     return name.trim();
@@ -50,7 +48,6 @@ async function userSearch(jsonData) {
     console.log(`User ${nameToSearch} not found in the database.`);
     process.exit(0);
 }
-
 
 async function main() {
     try {
