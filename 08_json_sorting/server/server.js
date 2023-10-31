@@ -9,14 +9,13 @@ const server = http.createServer((req, res) => {
   let { url } = req;
   const basePath = __dirname;
   
-  // If the URL doesn't contain an extension, assume it's a JSON file
   if (!path.extname(url)) {
     url += '.json';
   }
 
   const filePath = path.join(basePath, url);
 
-  console.log(filePath); // Log the constructed filePath
+  console.log(filePath); 
 
   fs.readFile(filePath, (err, data) => {
     if (err) {
