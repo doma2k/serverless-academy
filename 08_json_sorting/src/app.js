@@ -45,3 +45,4 @@ for (let i = 0; i < apiList.length; i++) {
   const response = await parceJson(apiList[i]);
   console.log(response + " " + apiList[i]);
 }
+

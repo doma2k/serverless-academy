@@ -3,7 +3,6 @@ export async function sortAlph(arr) {
   const words = /^[A-Za-z]+$/;
   const filtered = arr.filter((value) => words.test(value));
   const sorted = filtered.sort((a, b) => a.localeCompare(b));
-
   console.log(sorted);
 }
 
@@ -11,7 +10,6 @@ export async function sortAlph(arr) {
 export async function sortNumToGreater(arr) {
   const numericValues = arr.filter((value) => !isNaN(value));
   const sorted = numericValues.sort((a, b) => parseFloat(a) - parseFloat(b));
-
   console.log(sorted);
 }
 
@@ -19,7 +17,6 @@ export async function sortNumToGreater(arr) {
 export async function sortNumToSmaller(arr) {
   const numericValues = arr.filter((value) => !isNaN(value));
   const sorted = numericValues.sort((a, b) => parseFloat(b) - parseFloat(a));
-
   console.log(sorted);
 }
 
@@ -48,7 +45,6 @@ export async function sortUniqVal(arr) {
   const words = /^[A-Za-z]+$/;
   const alphanumericValues = arr.filter((value) => !words.test(value));
   const numericValues = alphanumericValues.filter((value) => isNaN(value));
-
   const uniqueValues = [...new Set(numericValues)];
   console.log(uniqueValues);
 }

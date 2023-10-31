@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "name": "Alice",
+    "details": {
+      "age": 30,
+      "address": {
+        "city": "New York",
+        "zip": 10001
+      }
+    },
+    "items": [
+      { "id": 101, "name": "Item1" },
+      { "id": 102, "name": "Item2" },
+      { "id": 20, "isDone": true }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Alice",
+    "details": {
+      "age": 30,
+      "address": {
+        "city": "New York",
+        "zip": 10001,
+        "isDone": false
+      }
+    },
+    "items": [
+      { "id": 101, "name": "Item1" },
+      { "id": 102, "name": "Item2" }
+    ]
+  }
+]
